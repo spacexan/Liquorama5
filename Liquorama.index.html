@@ -1,0 +1,949 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liquorama Blue Bottle Liquors</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/><style>
+
+:root{
+--primary:#0057ff;
+--secondary:#07111f;
+--accent:#ff3b3b;
+--light:#ffffff;
+--glass:rgba(255,255,255,0.08);
+--border:rgba(255,255,255,0.12);
+--shadow:0 20px 50px rgba(0,0,0,0.4);
+--transition:all .35s ease;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#040b15;
+color:white;
+overflow-x:hidden;
+line-height:1.6;
+}
+
+img{
+width:100%;
+display:block;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+ul{
+list-style:none;
+}
+
+section{
+padding:90px 7%;
+position:relative;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.section-title h2{
+font-size:clamp(2rem,5vw,3.5rem);
+font-family:'Montserrat',sans-serif;
+font-weight:800;
+margin-bottom:15px;
+background:linear-gradient(to right,#fff,#6bb7ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.section-title p{
+max-width:750px;
+margin:auto;
+color:rgba(255,255,255,0.7);
+}
+
+.glass{
+background:var(--glass);
+backdrop-filter:blur(18px);
+border:1px solid var(--border);
+box-shadow:var(--shadow);
+border-radius:28px;
+}
+
+#loader{
+position:fixed;
+inset:0;
+background:#040b15;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+transition:.7s;
+}
+
+#loader.hidden{
+opacity:0;
+visibility:hidden;
+}
+
+.loader-ring{
+width:90px;
+height:90px;
+border-radius:50%;
+border:4px solid rgba(255,255,255,0.1);
+border-top:4px solid var(--primary);
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+to{
+transform:rotate(360deg);
+}
+}
+
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:1000;
+transition:var(--transition);
+}
+
+header.scrolled{
+background:rgba(5,12,22,0.9);
+backdrop-filter:blur(12px);
+box-shadow:0 10px 40px rgba(0,0,0,0.4);
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 7%;
+}
+
+.logo{
+font-family:'Montserrat',sans-serif;
+font-weight:800;
+font-size:1.3rem;
+line-height:1.2;
+}
+
+.logo span{
+color:#5ea7ff;
+}
+
+.nav-links{
+display:flex;
+gap:30px;
+}
+
+.nav-links a{
+position:relative;
+font-size:.95rem;
+}
+
+.nav-links a::after{
+content:'';
+position:absolute;
+left:0;
+bottom:-6px;
+width:0;
+height:2px;
+background:var(--primary);
+transition:.3s;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after{
+width:100%;
+}
+
+.hamburger{
+display:none;
+font-size:1.7rem;
+cursor:pointer;
+}
+
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+background:url('images/banner.jpg') center/cover no-repeat;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+inset:0;
+background:
+linear-gradient(to bottom,rgba(4,10,20,0.85),rgba(5,12,22,0.93)),
+linear-gradient(to right,rgba(0,87,255,0.25),rgba(0,0,0,0.5));
+}
+
+.hero-bg{
+position:absolute;
+inset:0;
+background:url('images/banner.jpg') center/cover no-repeat;
+animation:zoom 18s ease-in-out infinite alternate;
+}
+
+@keyframes zoom{
+from{
+transform:scale(1.08);
+}
+to{
+transform:scale(1.18);
+}
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:760px;
+animation:fadeUp 1.2s ease;
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.hero-badge{
+display:inline-flex;
+align-items:center;
+gap:10px;
+padding:10px 20px;
+border-radius:50px;
+margin-bottom:25px;
+font-size:.9rem;
+}
+
+.hero h1{
+font-size:clamp(3rem,8vw,6rem);
+font-family:'Montserrat',sans-serif;
+font-weight:800;
+line-height:1.05;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:1.2rem;
+margin-bottom:35px;
+color:rgba(255,255,255,0.8);
+}
+
+.hero-buttons{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+padding:16px 30px;
+border-radius:60px;
+font-weight:600;
+transition:var(--transition);
+cursor:pointer;
+}
+
+.btn-primary{
+background:linear-gradient(135deg,var(--primary),#6bb7ff);
+box-shadow:0 15px 40px rgba(0,87,255,0.4);
+}
+
+.btn-secondary{
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.12);
+backdrop-filter:blur(10px);
+}
+
+.btn:hover{
+transform:translateY(-5px) scale(1.02);
+}
+
+.about-grid,
+.location-grid,
+.contact-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:35px;
+align-items:center;
+}
+
+.about-card,
+.contact-card,
+.contact-form,
+.hours-card{
+padding:40px;
+}
+
+.about-card h3,
+.hours-card h3{
+font-size:2rem;
+margin-bottom:20px;
+font-family:'Montserrat',sans-serif;
+}
+
+.feature-list{
+display:grid;
+gap:18px;
+margin-top:30px;
+}
+
+.feature{
+display:flex;
+gap:15px;
+}
+
+.feature i{
+color:#5ea7ff;
+margin-top:5px;
+}
+
+.specials-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:30px;
+}
+
+.product-card{
+overflow:hidden;
+transition:var(--transition);
+position:relative;
+}
+
+.product-card:hover{
+transform:translateY(-10px);
+}
+
+.product-image{
+height:240px;
+overflow:hidden;
+position:relative;
+}
+
+.product-image img{
+height:100%;
+object-fit:cover;
+transition:.6s;
+}
+
+.product-card:hover img{
+transform:scale(1.1);
+}
+
+.badge{
+position:absolute;
+top:15px;
+left:15px;
+background:var(--accent);
+padding:8px 14px;
+border-radius:50px;
+font-size:.8rem;
+font-weight:600;
+z-index:2;
+}
+
+.product-info{
+padding:25px;
+}
+
+.product-info h4{
+margin-bottom:12px;
+font-size:1.15rem;
+}
+
+.price{
+font-size:1.4rem;
+font-weight:700;
+color:#6bb7ff;
+}
+
+.catalog-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:25px;
+}
+
+.catalog-card{
+text-align:center;
+padding:35px 20px;
+transition:var(--transition);
+}
+
+.catalog-card:hover{
+transform:translateY(-10px);
+background:rgba(255,255,255,0.12);
+}
+
+.catalog-card i{
+font-size:2.5rem;
+margin-bottom:18px;
+color:#6bb7ff;
+}
+
+.gallery-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+}
+
+.gallery-item{
+overflow:hidden;
+border-radius:24px;
+position:relative;
+}
+
+.gallery-item img{
+height:280px;
+object-fit:cover;
+transition:.6s;
+}
+
+.gallery-item:hover img{
+transform:scale(1.1);
+}
+
+.map-frame iframe{
+width:100%;
+height:100%;
+min-height:450px;
+border:none;
+border-radius:24px;
+}
+
+.hours-list li{
+display:flex;
+justify-content:space-between;
+padding:14px 0;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.contact-item{
+display:flex;
+gap:18px;
+margin-bottom:25px;
+}
+
+.contact-item i{
+width:55px;
+height:55px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:rgba(255,255,255,0.08);
+color:#6bb7ff;
+font-size:1.2rem;
+}
+
+form{
+display:grid;
+gap:20px;
+}
+
+input,
+textarea{
+width:100%;
+padding:16px;
+border:none;
+outline:none;
+border-radius:14px;
+background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.08);
+color:white;
+font-family:inherit;
+}
+
+textarea{
+min-height:140px;
+resize:vertical;
+}
+
+input::placeholder,
+textarea::placeholder{
+color:rgba(255,255,255,0.55);
+}
+
+footer{
+background:#030914;
+padding:70px 7% 30px;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:40px;
+margin-bottom:40px;
+}
+
+.footer-logo{
+font-size:1.4rem;
+font-weight:800;
+margin-bottom:15px;
+}
+
+.footer-links{
+display:grid;
+gap:12px;
+}
+
+.socials{
+display:flex;
+gap:15px;
+margin-top:20px;
+}
+
+.socials a{
+width:45px;
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:rgba(255,255,255,0.08);
+transition:var(--transition);
+}
+
+.socials a:hover{
+background:var(--primary);
+transform:translateY(-5px);
+}
+
+.copyright{
+text-align:center;
+padding-top:20px;
+border-top:1px solid rgba(255,255,255,0.08);
+color:rgba(255,255,255,0.6);
+font-size:.9rem;
+}
+
+.whatsapp-btn,
+.scroll-top{
+position:fixed;
+right:20px;
+width:58px;
+height:58px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+box-shadow:0 15px 40px rgba(0,0,0,0.35);
+transition:var(--transition);
+}
+
+.whatsapp-btn{
+bottom:90px;
+background:#25D366;
+font-size:1.7rem;
+}
+
+.scroll-top{
+bottom:20px;
+background:var(--primary);
+opacity:0;
+visibility:hidden;
+}
+
+.scroll-top.show{
+opacity:1;
+visibility:visible;
+}
+
+.whatsapp-btn:hover,
+.scroll-top:hover{
+transform:translateY(-5px);
+}
+
+.reveal{
+opacity:0;
+transform:translateY(50px);
+transition:1s;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
+@media(max-width:980px){
+
+.nav-links{
+position:absolute;
+top:100%;
+left:0;
+width:100%;
+background:rgba(5,12,22,0.98);
+backdrop-filter:blur(15px);
+flex-direction:column;
+padding:25px 7%;
+opacity:0;
+visibility:hidden;
+transform:translateY(-30px);
+transition:.4s;
+}
+
+.nav-links.active{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
+
+.hamburger{
+display:block;
+}
+
+.hero{
+text-align:center;
+}
+
+.hero-buttons{
+justify-content:center;
+}
+
+}
+
+@media(max-width:600px){
+
+section{
+padding:75px 6%;
+}
+
+.hero h1{
+font-size:3rem;
+}
+
+.btn{
+width:100%;
+}
+
+}
+
+</style></head><body><div id="loader">
+<div class="loader-ring"></div>
+</div><header id="header">
+<nav><a href="#" class="logo">
+Liquorama <span>Blue Bottle</span><br>
+Liquors
+</a><ul class="nav-links" id="navLinks">
+<li><a href="#home" class="active">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#specials">Specials</a></li>
+<li><a href="#catalog">Catalog</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#location">Location</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul><div class="hamburger" id="hamburger">
+<i class="fas fa-bars"></i>
+</div></nav>
+</header><section class="hero" id="home"><div class="hero-bg"></div><div class="hero-content"><div class="hero-badge glass">
+<i class="fas fa-wine-bottle"></i>
+Premium Liquor Retailer • Zeerust
+</div><h1>Liquorama Blue Bottle Liquors</h1><p>Huge Variety • Great Value</p><div class="hero-buttons"><a href="#specials" class="btn btn-primary">
+<i class="fas fa-tags"></i>
+View Specials
+</a><a href="https://www.google.com/maps/dir/?api=1&destination=Voortrekker+St,+Zeerust,+2865,+South+Africa" target="_blank" class="btn btn-secondary">
+<i class="fas fa-location-dot"></i>
+Get Directions
+</a><a href="#contact" class="btn btn-secondary">
+<i class="fas fa-phone"></i>
+Contact Us
+</a></div></div></section><section id="about" class="reveal"><div class="section-title">
+<h2>About Us</h2>
+<p>Your trusted local liquor supplier in Zeerust offering excellent customer service, affordable pricing, and a premium beverage selection.</p>
+</div><div class="about-grid"><div class="about-card glass"><h3>Premium Beverage Experience</h3><p>
+Liquorama Blue Bottle Liquors proudly serves the Zeerust community with a huge variety of quality alcohol products including beer, whiskey, wine, vodka, brandy, ciders, soft drinks, and more.
+</p><div class="feature-list"><div class="feature">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Wide Product Variety</h4>
+<p>Beer, wines, whiskey, brandy, ciders and premium spirits.</p>
+</div>
+</div><div class="feature">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Trusted Local Service</h4>
+<p>Friendly customer service with a convenient shopping experience.</p>
+</div>
+</div><div class="feature">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Affordable Pricing</h4>
+<p>Competitive specials and excellent value every day.</p>
+</div>
+</div></div></div><div class="glass">
+<img src="images/banner.jpg" alt="Liquorama Banner" style="border-radius:28px;">
+</div></div></section><section id="specials" class="reveal"><div class="section-title">
+<h2>Current Specials</h2>
+<p>Explore our premium liquor deals and customer favorites.</p>
+</div><div class="specials-grid"><div class="product-card glass">
+<div class="badge">Special</div>
+<div class="product-image">
+<img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200&auto=format&fit=crop" alt="">
+</div>
+<div class="product-info">
+<h4>Castle Lite</h4>
+<div class="price">R129.99</div>
+</div>
+</div><div class="product-card glass">
+<div class="badge">Save 10%</div>
+<div class="product-image">
+<img src="https://images.unsplash.com/photo-1563223771-375783ee91ad?q=80&w=1200&auto=format&fit=crop" alt="">
+</div>
+<div class="product-info">
+<h4>Hansa</h4>
+<div class="price">R119.99</div>
+</div>
+</div><div class="product-card glass">
+<div class="badge">Hot Deal</div>
+<div class="product-image">
+<img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1200&auto=format&fit=crop" alt="">
+</div>
+<div class="product-info">
+<h4>Jameson</h4>
+<div class="price">R349.99</div>
+</div>
+</div><div class="product-card glass">
+<div class="badge">Popular</div>
+<div class="product-image">
+<img src="https://images.unsplash.com/photo-1584225064785-c62a8b43d148?q=80&w=1200&auto=format&fit=crop" alt="">
+</div>
+<div class="product-info">
+<h4>Jack Daniel's</h4>
+<div class="price">R399.99</div>
+</div>
+</div></div></section><section id="catalog" class="reveal"><div class="section-title">
+<h2>Product Categories</h2>
+<p>Premium beverage collections for every occasion.</p>
+</div><div class="catalog-grid"><div class="catalog-card glass">
+<i class="fas fa-beer-mug-empty"></i>
+<h4>Beer</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-wine-glass"></i>
+<h4>Wine</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-whiskey-glass"></i>
+<h4>Whiskey</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-bottle-droplet"></i>
+<h4>Brandy</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-martini-glass"></i>
+<h4>Vodka</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-cocktail"></i>
+<h4>Gin</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-wine-bottle"></i>
+<h4>Liquor</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-apple-whole"></i>
+<h4>Ciders</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-bolt"></i>
+<h4>Energy Drinks</h4>
+</div><div class="catalog-card glass">
+<i class="fas fa-glass-water"></i>
+<h4>Soft Drinks</h4>
+</div></div></section><section id="gallery" class="reveal"><div class="section-title">
+<h2>Store Gallery</h2>
+<p>Explore our premium retail atmosphere and product displays.</p>
+</div><div class="gallery-grid"><div class="gallery-item">
+<img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1200&auto=format&fit=crop" alt="">
+</div><div class="gallery-item">
+<img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200&auto=format&fit=crop" alt="">
+</div><div class="gallery-item">
+<img src="https://images.unsplash.com/photo-1563223771-375783ee91ad?q=80&w=1200&auto=format&fit=crop" alt="">
+</div><div class="gallery-item">
+<img src="https://images.unsplash.com/photo-1584225064785-c62a8b43d148?q=80&w=1200&auto=format&fit=crop" alt="">
+</div></div></section><section id="location" class="reveal"><div class="section-title">
+<h2>Visit Our Store</h2>
+<p>Conveniently located in Zeerust, South Africa.</p>
+</div><div class="location-grid"><div class="map-frame">
+<iframe src="https://maps.google.com/maps?q=Voortrekker%20St,%20Zeerust,%202865,%20South%20Africa&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+</div><div class="hours-card glass"><h3>Business Hours</h3><ul class="hours-list">
+<li><span>Monday</span><span>9am – 6pm</span></li>
+<li><span>Tuesday</span><span>9am – 6pm</span></li>
+<li><span>Wednesday</span><span>9am – 6pm</span></li>
+<li><span>Thursday</span><span>9am – 6pm</span></li>
+<li><span>Friday</span><span>9am – 6pm</span></li>
+<li><span>Saturday</span><span>9am – 2pm</span></li>
+<li><span>Sunday</span><span>Closed</span></li>
+</ul><br><p>
+<strong>Address:</strong><br>
+Voortrekker St, Zeerust, 2865, South Africa
+</p><br><a href="https://www.google.com/maps/dir/?api=1&destination=Voortrekker+St,+Zeerust,+2865,+South+Africa" target="_blank" class="btn btn-primary">
+<i class="fas fa-location-dot"></i>
+Get Directions
+</a></div></div></section><section id="contact" class="reveal"><div class="section-title">
+<h2>Contact Us</h2>
+<p>Reach out for specials, stock availability, and customer assistance.</p>
+</div><div class="contact-grid"><div class="contact-card glass"><div class="contact-item">
+<i class="fas fa-phone"></i>
+<div>
+<h4>Phone Number</h4>
+<p>082 319 5801</p>
+</div>
+</div><div class="contact-item">
+<i class="fas fa-location-dot"></i>
+<div>
+<h4>Location</h4>
+<p>Voortrekker St, Zeerust, South Africa</p>
+</div>
+</div><div class="contact-item">
+<i class="fab fa-whatsapp"></i>
+<div>
+<h4>WhatsApp</h4>
+<p>Fast customer support available</p>
+</div>
+</div><a href="https://wa.me/27823195801" target="_blank" class="btn btn-primary">
+<i class="fab fa-whatsapp"></i>
+Chat on WhatsApp
+</a></div><div class="contact-form glass"><form><input type="text" placeholder="Your Name" required><input type="tel" placeholder="Phone Number" required><textarea placeholder="Your Message"></textarea><button class="btn btn-primary" type="submit">
+<i class="fas fa-paper-plane"></i>
+Send Message
+</button></form></div></div></section><footer><div class="footer-grid"><div>
+<div class="footer-logo">
+Liquorama Blue Bottle Liquors
+</div><p>
+Huge Variety • Great Value
+</p><div class="socials">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-tiktok"></i></a>
+</div></div><div><h4>Quick Links</h4><div class="footer-links">
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#specials">Specials</a>
+<a href="#catalog">Catalog</a>
+<a href="#gallery">Gallery</a>
+</div></div><div><h4>Business Hours</h4><div class="footer-links">
+<span>Mon - Fri: 9am - 6pm</span>
+<span>Saturday: 9am - 2pm</span>
+<span>Sunday: Closed</span>
+</div></div><div><h4>Contact</h4><div class="footer-links">
+<span>082 319 5801</span>
+<span>Zeerust, South Africa</span>
+</div></div></div><div class="copyright">
+© 2026 Liquorama Blue Bottle Liquors. All Rights Reserved.
+</div></footer><a href="https://wa.me/27823195801" class="whatsapp-btn" target="_blank">
+<i class="fab fa-whatsapp"></i>
+</a><a href="#home" class="scroll-top" id="scrollTop">
+<i class="fas fa-arrow-up"></i>
+</a><script>
+
+window.addEventListener('load',()=>{
+
+document.getElementById('loader').classList.add('hidden');
+
+});
+
+const hamburger=document.getElementById('hamburger');
+const navLinks=document.getElementById('navLinks');
+
+hamburger.addEventListener('click',()=>{
+
+navLinks.classList.toggle('active');
+
+});
+
+window.addEventListener('scroll',()=>{
+
+const header=document.getElementById('header');
+
+if(window.scrollY>50){
+header.classList.add('scrolled');
+}else{
+header.classList.remove('scrolled');
+}
+
+});
+
+const reveals=document.querySelectorAll('.reveal');
+
+function revealSections(){
+
+reveals.forEach(section=>{
+
+const windowHeight=window.innerHeight;
+const revealTop=section.getBoundingClientRect().top;
+
+if(revealTop<windowHeight-100){
+section.classList.add('active');
+}
+
+});
+
+}
+
+window.addEventListener('scroll',revealSections);
+
+revealSections();
+
+const scrollTop=document.getElementById('scrollTop');
+
+window.addEventListener('scroll',()=>{
+
+if(window.scrollY>400){
+scrollTop.classList.add('show');
+}else{
+scrollTop.classList.remove('show');
+}
+
+});
+
+const sections=document.querySelectorAll('section');
+const navItems=document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll',()=>{
+
+let current='';
+
+sections.forEach(section=>{
+
+const sectionTop=section.offsetTop;
+
+if(scrollY>=sectionTop-200){
+current=section.getAttribute('id');
+}
+
+});
+
+navItems.forEach(link=>{
+
+link.classList.remove('active');
+
+if(link.getAttribute('href').includes(current)){
+link.classList.add('active');
+}
+
+});
+
+});
+
+</script></body>
+</html>
