@@ -1,2 +1,2 @@
 # Liquorama5
-Selling retail alcohol 
+Selling retail alcohol
